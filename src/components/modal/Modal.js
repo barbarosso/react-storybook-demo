@@ -45,18 +45,38 @@ export default class Modal extends Component {
       cancelHandler
     } = this.props;
     
-    /*const rgb = convert.hex.rgb(backgroundColor);
-    const rgba = [...rgb, backgroundAlpha].join() || "rgba(0,0,0,0.3)";*/
+    const rgb = convert.hex.rgb(backgroundColor);
+    const rgba = [...rgb, backgroundAlpha].join() || "rgba(0,0,0,0.3)";
     const display = this.state.visible ? "flex" : "none";
 
     return (
       <Wrapper
         display={display}
-        //rgba={rgba}
+        rgba={rgba}
       >
         <ModalInner>
           <ModalContent>
-              
+              {title.length > 0 && <Title>{title}</Title>}
+              {body.length > 0 && <Body>{body}</Body>}
+              {this.props.children}
+
+            {cancelHandler &&
+              <Button
+                onClick={() => {
+                  this.cancelHandler();
+                }}
+              >
+                cancel
+              </Button>}
+
+            {okHandler &&
+              <Button
+                onClick={() => {
+                  this.okHandler();
+                }}
+              >
+                ok
+              </Button>}
           </ModalContent>
         </ModalInner>
       </Wrapper>
